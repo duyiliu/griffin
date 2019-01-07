@@ -56,6 +56,7 @@ case class AvroBatchDataConnector(@transient sparkSession: SparkSession,
     val dfOpt = try {
       val df = sparkSession.read.format("com.databricks.spark.avro").load(concreteFileFullPath)
       val dfOpt = Some(df)
+
       val preDfOpt = preProcess(dfOpt, ms)
       preDfOpt
     } catch {
@@ -63,6 +64,9 @@ case class AvroBatchDataConnector(@transient sparkSession: SparkSession,
         error(s"load avro file ${concreteFileFullPath} fails", e)
         None
     }
+
+    dfOpt.get.show()
+
     val tmsts = readTmst(ms)
     (dfOpt, TimeRange(ms, tmsts))
   }

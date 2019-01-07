@@ -1,0 +1,63 @@
+{
+  "name": "prof_batch3",
+  "process.type": "batch",
+  "measure.type": "griffin",
+  "data.sources": [
+    {
+      "name": "source",
+      "connectors": [
+        {
+          "type": "hive",
+          "version": "1.2",
+          "config": {
+            "database": "default",
+            "table.name": "profile_test3wX4"
+          }
+        }
+      ]
+    }
+  ],
+  "evaluate.rule": {
+    "rules": [
+      {
+        "dsl.type": "custom-operator",
+        "out.dataframe.name": "grp",
+        "rule": "ccc",
+        "details": {
+          "datasource": "source",
+          "field_operators": {
+            "c0": [
+              {
+                "name": "min"
+              },
+              {
+                "name": "max"
+              },
+              {
+                "name": "topK"
+              },
+              {
+                "name": "Abnormal",
+                "config": {
+                  "check_type": "regex",
+                  "rule": "^\\d{2}$",
+                  "records_limit": 100
+                }
+              }
+            ]
+          }
+        },
+        "out": [
+          {
+            "type": "metric",
+            "name": "post_group"
+          }
+        ]
+      }
+    ]
+  },
+  "sinks": [
+    "CONSOLE",
+    "ELASTICSEARCH"
+  ]
+}

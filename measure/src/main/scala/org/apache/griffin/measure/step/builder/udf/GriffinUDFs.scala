@@ -35,6 +35,7 @@ object GriffinUDFs {
   def register(sqlContext: SQLContext): Unit = {
     sqlContext.udf.register("index_of", indexOf _)
     sqlContext.udf.register("matches", matches _)
+    sqlContext.udf.register("strLen", (s: String ) => if(s!=null) s.toString.length else 0)
     sqlContext.udf.register("reg_replace", regReplace _)
   }
 
@@ -58,6 +59,7 @@ object GriffinUDFs {
 object GriffinUDAggFs {
 
   def register(sqlContext: SQLContext): Unit = {
+    sqlContext.udf.register("myAvg", new MyAvg)
   }
 
 }

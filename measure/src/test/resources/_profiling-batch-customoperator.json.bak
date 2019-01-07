@@ -1,0 +1,71 @@
+{
+  "name": "prof_batch",
+  "process.type": "batch",
+  "timestamp": 123456,
+  "data.sources": [
+    {
+      "name": "source",
+      "connectors": [
+        {
+          "type": "avro",
+          "version": "1.7",
+          "config": {
+            "file.name": "src/test/resources/users_info_src.avro"
+          }
+        }
+      ]
+    }
+  ],
+  "evaluate.rule": {
+    "rules": [
+      {
+        "dsl.type": "custom-operator",
+        "out.dataframe.name": "grp",
+        "rule": "ccc",
+        "details": {
+          "datasource": "source",
+          "field_operators": {
+            "user_id": [
+              {
+                "name": "outlier",
+                "operatorType": "regex",
+                "content": "\\d{5}"
+              },
+              {
+                "name": "min",
+                "operatorType": "max"
+              },
+              {
+                "name": "max",
+                "operatorType": "built-in"
+              },
+              {
+                "name": "cardinality",
+                "operatorType": "built-in"
+              },
+              {
+                "name": "topk",
+                "operatorType": "built-in"
+              },
+              {
+                "name": "dataTypeDetection",
+                "operatorType": "built-in"
+              }
+            ]
+          }
+        },
+        "out": [
+          {
+            "type": "metric",
+            "name": "post_group",
+            "flatten": "array"
+          }
+        ]
+      }
+    ]
+  },
+  "sinks": [
+    "CONSOLE",
+    "ELASTICSEARCH"
+  ]
+}

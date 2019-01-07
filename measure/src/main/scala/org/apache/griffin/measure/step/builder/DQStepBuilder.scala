@@ -78,6 +78,7 @@ object DQStepBuilder {
       case SparkSqlType => Some(SparkSqlDQStepBuilder())
       case DataFrameOpsType => Some(DataFrameOpsDQStepBuilder())
       case GriffinDslType => Some(GriffinDslDQStepBuilder(dsNames, funcNames))
+      case CustomOperatorType => Some(CustomOperatorDQStepBuilder())
       case _ => None
     }
   }

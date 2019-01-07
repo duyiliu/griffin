@@ -29,7 +29,7 @@ sealed trait DslType {
 }
 
 object DslType {
-  private val dslTypes: List[DslType] = List(SparkSqlType, GriffinDslType, DataFrameOpsType)
+  private val dslTypes: List[DslType] = List(SparkSqlType, GriffinDslType, DataFrameOpsType,CustomOperatorType)
   def apply(ptn: String): DslType = {
     dslTypes.find(tp => ptn match {
       case tp.idPattern() => true
@@ -61,4 +61,12 @@ object DslType {
  case object GriffinDslType extends DslType {
   val idPattern = "^(?i)griffin-?dsl$".r
   val desc = "griffin-dsl"
+}
+
+/**
+  * custom-operator: custom-operator  rule,
+  */
+case object CustomOperatorType extends DslType {
+  val idPattern = "^(?i)custom-?operator".r
+  val desc = "custom-operator"
 }
