@@ -50,7 +50,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 @Entity
-public class DataConnector extends AbstractAuditableEntity {
+public class    DataConnector extends AbstractAuditableEntity {
     private static final long serialVersionUID = -4748881017029815594L;
 
     private final static Logger LOGGER = LoggerFactory
